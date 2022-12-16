@@ -23,19 +23,24 @@ const ListEvents = (props) => {
 
   const closeModal = () => setModalVisible(false);
 
+  const isValidDate = dateString => {
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    return dateRegex.test(dateString);
+  };
+
   const addEvent = () => {
-    // Ouvrez un modal ou une autre vue pour que l'utilisateur puisse entrer les détails de l'événement
-    // Une fois que l'utilisateur a saisi les détails de l'événement, utilisez la fonction setEvents pour ajouter l'événement au tableau d'événements
-    setEvents([...events, {id: uuidv4(), name: input, date: date}]);
-    props.changeList([...events, {id: uuidv4(), name: input, date: date}]);
-    setInput("");
-    setDate("");
-    closeModal();
+    if (isValidDate(date)) {
+      setEvents([...events, {id: uuidv4(), name: input, date: date}]);
+      props.changeList([...events, {id: uuidv4(), name: input, date: date}]);
+      setInput("");
+      setDate("");
+      closeModal();
+    } else {
+      alert("La date renseigner est invalide, format attendu: YYYY-MM-DD");
+    }
   };
 
   const editEvent = () => {
-    // Ouvrez un modal ou une autre vue pour que l'utilisateur puisse modifier les détails de l'événement
-    // Une fois que l'utilisateur a modifié les détails de l'événement, utilisez la fonction setEvents pour mettre à jour le tableau d'événements avec les nouvelles informations de l'événement
     const updatedEvents = [...events];
     updatedEvents[editIndex] = {id: updatedEvents[editIndex].id, name: input, date: date};
     setEvents(updatedEvents);
@@ -46,7 +51,6 @@ const ListEvents = (props) => {
   };
 
   const deleteEvent = (index) => {
-    // Utilisez la fonction setEvents pour supprimer l'événement du tableau d'événements
     const updatedEvents = [...events];
     updatedEvents.splice(index, 1);
     setEvents(updatedEvents);

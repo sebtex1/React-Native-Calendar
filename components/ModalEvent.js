@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, Modal, Button, TextInput } from 'react-native';
 
 const ModalEvent = (props) => {
