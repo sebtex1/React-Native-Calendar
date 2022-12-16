@@ -8,8 +8,14 @@ const ListEvents = (props) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [input, setInput] = useState("");
   const [date, setDate] = useState("");
+  const [editIndex, setEditIndex] = useState(0);
 
   const openModal = () => setModalVisible(true);
+
+  const openModalEdit = (index) => {
+    setModalVisible(true);
+    setEditIndex(index);
+  };
 
   const closeModal = () => setModalVisible(false);
 
@@ -22,17 +28,22 @@ const ListEvents = (props) => {
     closeModal();
   };
 
-  const editEvent = (event) => {
+  const editEvent = () => {
     // Ouvrez un modal ou une autre vue pour que l'utilisateur puisse modifier les détails de l'événement
     // Une fois que l'utilisateur a modifié les détails de l'événement, utilisez la fonction setEvents pour mettre à jour le tableau d'événements avec les nouvelles informations de l'événement
-    
+    const updatedEvents = [...events];
+    updatedEvents[editIndex] = {id: updatedEvents[editIndex].id, name: input, date: date};
+    setEvents(updatedEvents);
+    setInput("");
+    setDate("");
+    closeModal();
   };
 
   const deleteEvent = (index) => {
     // Utilisez la fonction setEvents pour supprimer l'événement du tableau d'événements
-    const updatedItems = [...events];
-    updatedItems.splice(index, 1);
-    setEvents(updatedItems);
+    const updatedEvents = [...events];
+    updatedEvents.splice(index, 1);
+    setEvents(updatedEvents);
   };
 
 
@@ -45,7 +56,7 @@ const ListEvents = (props) => {
           <View>
             <Text>Nom: {item.name}</Text>
             <Text>Date: {item.date}</Text>
-            <Button title="Modifier" onPress={() => editEvent(item)} />
+            <Button title="Modifier" onPress={() => openModalEdit(index)} />
             <Button title="Supprimer" onPress={() => deleteEvent(index)} />
           </View>
         )}
@@ -57,6 +68,7 @@ const ListEvents = (props) => {
         visible={isModalVisible}
         close={closeModal}
         add={addEvent}
+        edit={editEvent}
       />
     </View>
   );
