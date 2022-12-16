@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { View, Text, Button, FlatList } from 'react-native';
+import { StyleSheet, View, Text, Button, FlatList } from 'react-native';
 import ModalEvent from './ModalEvent';
 
 const ListEvents = (props) => {
@@ -54,6 +54,7 @@ const ListEvents = (props) => {
     const updatedEvents = [...events];
     updatedEvents.splice(index, 1);
     setEvents(updatedEvents);
+    props.changeList(updatedEvents);
   };
 
 
@@ -66,8 +67,10 @@ const ListEvents = (props) => {
           <View>
             <Text>Nom: {item.name}</Text>
             <Text>Date: {item.date}</Text>
-            <Button title="Modifier" onPress={() => openModalEdit(index)} />
-            <Button title="Supprimer" onPress={() => deleteEvent(index)} />
+            <View style={styles.rowContainer}>
+              <Button title="Modifier" onPress={() => openModalEdit(index)} />
+              <Button title="Supprimer" onPress={() => deleteEvent(index)} />
+            </View>
           </View>
         )}
         keyExtractor={item => item.id}
@@ -84,5 +87,12 @@ const ListEvents = (props) => {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  rowContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around"
+  }
+})
 
 export default ListEvents;
