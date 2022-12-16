@@ -27,6 +27,7 @@ const ListEvents = (props) => {
     // Ouvrez un modal ou une autre vue pour que l'utilisateur puisse entrer les détails de l'événement
     // Une fois que l'utilisateur a saisi les détails de l'événement, utilisez la fonction setEvents pour ajouter l'événement au tableau d'événements
     setEvents([...events, {id: uuidv4(), name: input, date: date}]);
+    props.changeList([...events, {id: uuidv4(), name: input, date: date}]);
     setInput("");
     setDate("");
     closeModal();

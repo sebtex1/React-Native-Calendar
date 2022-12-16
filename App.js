@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import ListEvents from "./components/ListEvents";
-import CalendarPicker from 'react-native-calendar-picker';
+import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
 const App = () => {
   const [list, setList] = useState([]);
+
   return (
     <View style={styles.container}>
-      <CalendarPicker
-        onDateChange={date => {
-          console.log('selected date', date);
-        }}
+      <Calendar
+        // Collection of dates that have to be marked. Default = {}
+        markedDates={Object.fromEntries(list.map(el => [el.date, {marked: true}]))}
       />
       <View style={styles.form}>
-        <ListEvents list={list}/>
+        <ListEvents list={list} changeList={setList}/>
       </View>
     </View>
   );

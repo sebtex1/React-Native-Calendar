@@ -17,7 +17,7 @@ const ModalEvent = (props) => {
             style={styles.input}
             value={props.date.date}
             onChangeText={(text) => props.date.setDate(text)}
-            placeholder="Date de l'event"
+            placeholder="Date: YYYY-MM-DD"
           />
           <Button title="Fermer le modal" onPress={props.close} />
           { 
