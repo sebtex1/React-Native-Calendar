@@ -9,9 +9,9 @@ const ListEvents = (props) => {
   const [input, setInput] = useState("");
   const [date, setDate] = useState("");
 
-  const openModal = () => {
-    setModalVisible(true);
-  };
+  const openModal = () => setModalVisible(true);
+
+  const closeModal = () => setModalVisible(false);
 
   const addEvent = () => {
     // Ouvrez un modal ou une autre vue pour que l'utilisateur puisse entrer les détails de l'événement
@@ -19,31 +19,34 @@ const ListEvents = (props) => {
     setEvents([...events, {id: uuidv4(), name: input, date: date}]);
     setInput("");
     setDate("");
-    setModalVisible(false);
+    closeModal();
   };
 
   const editEvent = (event) => {
     // Ouvrez un modal ou une autre vue pour que l'utilisateur puisse modifier les détails de l'événement
     // Une fois que l'utilisateur a modifié les détails de l'événement, utilisez la fonction setEvents pour mettre à jour le tableau d'événements avec les nouvelles informations de l'événement
+    
   };
 
-  const deleteEvent = (event) => {
+  const deleteEvent = (index) => {
     // Utilisez la fonction setEvents pour supprimer l'événement du tableau d'événements
+    const updatedItems = [...events];
+    updatedItems.splice(index, 1);
+    setEvents(updatedItems);
   };
 
-  const closeModal = () => setModalVisible(false);
 
   return (
     <View>
       <Button title="Ajouter un événement" onPress={openModal} />
       <FlatList
         data={events}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <View>
             <Text>Nom: {item.name}</Text>
             <Text>Date: {item.date}</Text>
             <Button title="Modifier" onPress={() => editEvent(item)} />
-            <Button title="Supprimer" onPress={() => deleteEvent(item)} />
+            <Button title="Supprimer" onPress={() => deleteEvent(index)} />
           </View>
         )}
         keyExtractor={item => item.id}
