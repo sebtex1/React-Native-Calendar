@@ -20,8 +20,12 @@ const ModalEvent = (props) => {
             placeholder="Date de l'event"
           />
           <Button title="Fermer le modal" onPress={props.close} />
-          <Button title="Ajouter l'event" onPress={props.add} />
-          <Button title="Modifer l'event" onPress={props.edit} />
+          { 
+            props.modeEdit
+            ? <Button title="Modifer l'event" onPress={props.edit} />
+            : <Button title="Ajouter l'event" onPress={props.add} />
+          }
+          
         </View>
       </Modal>
     </View>

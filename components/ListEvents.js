@@ -9,12 +9,16 @@ const ListEvents = (props) => {
   const [input, setInput] = useState("");
   const [date, setDate] = useState("");
   const [editIndex, setEditIndex] = useState(0);
+  const [modeEdit, setModeEdit] = useState(false);
 
   const openModal = () => setModalVisible(true);
 
   const openModalEdit = (index) => {
-    setModalVisible(true);
+    setInput(events[index].name);
+    setDate(events[index].date);
+    setModeEdit(true);
     setEditIndex(index);
+    setModalVisible(true);
   };
 
   const closeModal = () => setModalVisible(false);
@@ -37,6 +41,7 @@ const ListEvents = (props) => {
     setInput("");
     setDate("");
     closeModal();
+    setModeEdit(false);
   };
 
   const deleteEvent = (index) => {
@@ -69,6 +74,7 @@ const ListEvents = (props) => {
         close={closeModal}
         add={addEvent}
         edit={editEvent}
+        modeEdit={modeEdit}
       />
     </View>
   );
